@@ -1,0 +1,13 @@
+# Ignore Python environments
+**/venv/
+**/__pycache__/
+*.pyc
+
+# Ignore Node environments
+**/node_modules/
+**/.next/
+**/.expo/
+
+# Ignore ALL environment secrets globally
+**/.env
+**/.env.local
