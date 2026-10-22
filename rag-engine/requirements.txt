@@ -5,5 +5,5 @@ pypdf
 openai
 supabase
 python-dotenv
-sentence-transformers
 python-multipart
+requests
