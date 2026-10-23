@@ -17,9 +17,10 @@ load_dotenv()
 
 app = FastAPI(title="Project Eklavya - Lightweight Backend")
 
+# Allows your frontend to talk to this backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"], # In production, replace "*" with your Vercel/AI Studio URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -31,7 +32,7 @@ supabase_client: Client = create_client(os.getenv("SUPABASE_URL"), os.getenv("SU
 
 LATEST_CHUNKS_CACHE: Dict[str, List[str]] = {}
 
-# --- 2. HUGGING FACE INFERENCE API (Replaces local SentenceTransformers) ---
+# --- 2. HUGGING FACE INFERENCE API (Lightweight Vectorization) ---
 HF_TOKEN = os.getenv("HF_TOKEN")
 HF_API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
@@ -42,7 +43,6 @@ def get_embedding(text: str) -> List[float]:
     if response.status_code != 200:
         raise HTTPException(status_code=500, detail=f"HF Embedding API failed: {response.text}")
     
-    # The API returns a list of floats (the vector)
     result = response.json()
     if isinstance(result, list) and len(result) > 0 and isinstance(result[0], list):
         return result[0] # Handle nested lists if batch format is returned
@@ -86,7 +86,7 @@ class RenameDoc(BaseModel): custom_name: str
 # --- 5. CORE ENDPOINTS ---
 
 @app.get("/")
-async def root(): return {"status": "online", "service": "Eklavya API"}
+async def root(): return {"status": "online", "service": "Eklavya API (Lightweight)"}
 
 @app.post("/api/user/sync")
 async def sync_user_profile(payload: UserSync):
