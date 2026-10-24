@@ -1,11 +1,20 @@
 source .venv/bin/activate 
 
 run this everytime
-# 1. Navigate to the backend folder
-cd ~/projects/edtech-ecosystem/rag-engine
+  # 1. Navigate to the backend folder
+    cd ~/projects/edtech-ecosystem/rag-engine
 
-# 2. Activate the virtual environment
-source venv/bin/activate
+    # 2. Activate the virtual environment
+    source venv/bin/activate
 
-# 3. Start the server safely on port 8000
-python -m uvicorn main:app --reload --port 8000
+    # 3. Start the server safely on port 8000
+    python -m uvicorn main:app --reload --port 8000
+
+    # 2. Stage all your recent changes
+git add .
+
+# 3. Commit the changes with a message
+git commit -m "fix: update CORS and environment configurations"
+
+# 4. Push to GitHub (Render will auto-deploy after this)
+git push origin main
